@@ -16,8 +16,8 @@
 
 //1. Need to create a 'canvas' for the D3 graph to go on: 
 // Define SVG area dimensions
-var svgWidth = 960;
-var svgHeight = 660;
+var svgWidth = 500;
+var svgHeight = 500;
 
 // Define the chart's margins as an object
 var chartMargin = {
@@ -31,12 +31,11 @@ var chartMargin = {
 var chartWidth = svgWidth - chartMargin.left - chartMargin.right;
 var chartHeight = svgHeight - chartMargin.top - chartMargin.bottom;
 
-// Select scatterplot (class in index.html), append SVG area to it, and set the dimensions
+// Select scatterplot (id in index.html), append SVG area to it, and set the dimensions
 var svg = d3.select("#scatter")
   .append("svg")
   .attr("height", svgHeight)
-  .attr("width", svgWidth)
-  .attr("class", "chart");
+  .attr("width", svgWidth); 
 
 // Append a group to the SVG area and shift ('translate') it to the right and to the bottom
 var chartGroup = svg.append("g")
@@ -81,15 +80,13 @@ d3.csv("data.csv", function(error, Data) {
 
   // Create one SVG rectangle per piece of tvData
   // Use the linear and band scales to position each rectangle within the chart
-  chartGroup.selectAll(".bar")
+  chartGroup.selectAll("circle")
     .data(Data)
     .enter()
-    .append("rect")
-    .attr("class", "bar")
-    .attr("x", d => xBandScale(d.poverty))
-    .attr("y", d => yLinearScale(d.healthcare))
-    .attr("width", xBandScale.bandwidth())
-    .attr("height", d => chartHeight - yLinearScale(d.healthcare));
+    .append("circle")
+    .attr("cx", d => xBandScale(d.poverty))
+    .attr("cy", d => yLinearScale(d.healthcare))
+    .attr("r", 5); 
 
 });
 
